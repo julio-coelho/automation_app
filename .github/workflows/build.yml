@@ -1,0 +1,22 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ master ]
+    
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image:  fluttersdk/fluttersdk:latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Update Flutter
+      run: flutter upgrade
+    - name: Install dependencies
+      run: flutter pub get
+    - name: Run build
+      run: flutter build apk
