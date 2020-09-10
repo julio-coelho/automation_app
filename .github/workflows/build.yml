@@ -14,9 +14,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Android Licences
+      run: flutter doctor --android-licenses
     - name: Update Flutter
       run: flutter upgrade
-    - name: Install dependencies
-      run: flutter pub get
-    - name: Run build
-      run: flutter build apk
+    - name: SDK upgrade
+      run: sdkmanager "system-images;android-29;google_apis_playstore;x86"
+    - name: Unit Tests
+      run: flutter test
+    - name: Create Emulator
+      run: flutter emulators --create
+    - name: Start Emulator
+      run: flutter emulators --launch flutter_emulator
+    - name: Waiting Emulator
+      run: sleep 60
+    - name: Integration Tests
+      run: flutter drive --target=test_driver/app.dart
